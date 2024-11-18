@@ -32,13 +32,106 @@ from orders;
 
 
 --6. List the details of orders placed by the customer named Alice Johnson;
-
+select orderid,quantity,totalprice,name
+from customers,orders
+where name= 'Alice Johnson';
 
 
 --7. Identify the book with the highest price.
-
-
-
+select bookid,title, max(price) as highest_price
+from books
+Group by bookid
+limit 1;
 
 --8. Retrieve the details of books that have less than 50 units in stock.
+select *
+from books
+where stock <= 50;
+
+--Joins
+--9. Write a query to list all books along with their author name.
+select name as author_name,title as book
+from authors,books;
+
+--10. Display all orders with the customer name and book title included.
+select o.orderid,o.orderdate,o.quantity,o.totalprice,c.name
+from orders o 
+INNER JOIN customers c ON c.customerid=o.customerid
+INNER JOIN books b ON b.bookid=o.bookid;
+
+--Aggregations
+--11. Calculate the total number of orders placed by each customer.
+select c.customerid, c.name , count(o.orderdate) as total_order
+from orders o 
+INNER JOIN customers c ON o.customerid=c.customerid
+group by c.customerid;
+
+
+--12. Find the average price of books in the Fiction genre.
+select avg(price)
+from books
+where genre = 'Fiction';
+
+
+--13. Determine the author whose books have the highest combined stock.
+select a.name as authorname, max(b.stock) as highest_tock
+from books b 
+INNER JOIN authors a ON b.authorid=a.authorid
+group by authorname
+order by highest_tock desc
+limit 1;
+
+
+--Filtering
+--14. Retrieve the names of authors born before 1950.
+
+select name as authorname
+from authors
+where birthyear <= 1950;
+
+
+--15. Find all customers from the United Kingdom;
+select *
+from customers
+where country = 'United Kingdom';
+
+
+--Advanced Queries
+--16. Write a query to list all books that have been ordered more than once.
+select b.bookid as  bookss , count(o.orderdate) as total_order
+from orders o 
+INNER JOIN books b ON o.bookid= b.bookid
+group by bookss
+having count(o.orderdate) <> 0;
+
+--17. Identify the top-selling book based on the quantity sold.
+select max(o.quantity) as top_selling, b.title as book
+from books b 
+INNER JOIN orders o ON o.bookid=b.bookid
+group by book
+limit 1;
+
+
+--18. Calculate the total stock value for each book (price * stock).
+select bookid,title, (price*stock ) as total_stock
+from books;
+
+
+--Subqueries
+--19. Write a query to find the name of the customer who placed the most expensive order.
+select c.name as customer_name, max(o.totalprice) as expensive_order,c.customerid
+from orders o 
+INNER JOIN customers c ON c.customerid= o.customerid
+GROUP by c.customerid
+order by expensive_order desc
+limit 1;
+
+
+--20. Retrieve all books that have not been ordered yet.
+select b.bookid,b.title
+from books b 
+INNER join orders o ON o.bookid <> o.bookid;
+
+
+
 
