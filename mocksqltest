@@ -131,7 +131,3 @@ limit 1;
 select b.bookid,b.title
 from books b 
 INNER join orders o ON o.bookid <> o.bookid;
-
-
-
-
