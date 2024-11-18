@@ -1,0 +1,44 @@
+--Step 2: Questions--
+--Basic Queries--
+
+-- Question-1 : 1. Write a query to display all the authors in the database.
+
+select * 
+from authors;
+
+--Question-2 :Retrieve the names and emails of all customers who joined after February 1, 2023.
+
+select name,email 
+from customers
+where joindate > '2023-02-01';
+
+
+--3. Find all books in the 'Fantasy' genre.
+
+select title, bookid
+from books
+where genre= 'Fantasy';
+
+--4.  Display the total number of books available in stock.
+select count(stock) as total_number
+from books;
+
+-- Intermediate Queries
+--5. Show the total revenue generated from all orders.
+
+select sum(totalprice) as total_revenue
+from orders;
+
+
+
+--6. List the details of orders placed by the customer named Alice Johnson;
+
+
+
+--7. Identify the book with the highest price.
+
+
+
+
+--8. Retrieve the details of books that have less than 50 units in stock.
+
